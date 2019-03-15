@@ -1,5 +1,6 @@
 package com.example.contactmanagementsystem;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.emargency:
                 Toast.makeText(MainActivity.this, "emargency", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, EmargencyContact.class);
+                startActivity(intent);
                 break;
             case R.id.logout:
                 Toast.makeText(MainActivity.this, "logout", Toast.LENGTH_LONG).show();
