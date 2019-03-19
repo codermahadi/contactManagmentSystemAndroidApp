@@ -17,15 +17,14 @@ public class ViewPageAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int i) {
-        return null;
+    public Fragment getItem(int position) {
+        return lstFrmt.get(position);
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return lstTitles.size();
     }
-
     @Override
     public CharSequence getPageTitle(int position) {
 
