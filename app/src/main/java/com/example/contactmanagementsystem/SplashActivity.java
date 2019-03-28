@@ -1,11 +1,14 @@
 package com.example.contactmanagementsystem;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+
+import com.example.contactmanagementsystem.SqlLiteD.MyDBHelper;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,6 +22,12 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        //        Todo: Start DB Create Section
+        MyDBHelper myDBHelper = new MyDBHelper(this);
+        SQLiteDatabase database = myDBHelper.getWritableDatabase();
+        //        Todo: End DB Create Section
+
 
         app_name = (LinearLayout) findViewById(R.id.app_name);
         get_start = (LinearLayout) findViewById(R.id.get_start);
@@ -37,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
 
                 System.out.println("Time Out");
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
