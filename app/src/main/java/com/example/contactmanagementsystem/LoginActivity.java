@@ -1,9 +1,12 @@
 package com.example.contactmanagementsystem;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +25,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("cms", Context.MODE_PRIVATE);
+        if (sharedPreferences.contains("isLoging")){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
 
         myDBHelper = new MyDBHelper(this);
 
@@ -56,13 +65,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String mobileNo = mobile.getText().toString().trim();
         String pass = password.getText().toString().trim();
 
-        Cursor cursor = myDBHelper.login(mobileNo, pass);
-//        if (id > 0) {
-//            Toast.makeText(LoginActivity.this, "Register Success!", Toast.LENGTH_LONG).show();
-//            startActivity(new Intent(LoginActivity.this, LoginActivity.class));
-//        } else {
-//            Toast.makeText(LoginActivity.this, "Register Faild!", Toast.LENGTH_LONG).show();
-//        }
+        boolean isLogin = myDBHelper.login(mobileNo, pass);
+        if (isLogin) {
+
+            SharedPreferences sharedPreferences = getSharedPreferences("cms", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putBoolean("isLoging", isLogin);
+            editor.commit();
+
+            Toast.makeText(this,"Data Stored successfully", Toast.LENGTH_LONG).show();
+            Log.i("Login", "Success");
+            Toast.makeText(LoginActivity.this, "Login Success!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        } else {
+            Toast.makeText(LoginActivity.this, "Login Faild!", Toast.LENGTH_LONG).show();
+        }
     }
 
 }
